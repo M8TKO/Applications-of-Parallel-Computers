@@ -23,6 +23,7 @@ This project implements the **Floyd-Warshall algorithm** for computing the short
 - All-pairs shortest path (Floyd-Warshall)
 - Parallel matrix computation using threads
 - Matrix pretty-printing with "inf" for unreachable vertices
+- Built-in test runner with CLI support
 
 ---
 
@@ -32,6 +33,7 @@ This project implements the **Floyd-Warshall algorithm** for computing the short
 - Custom headers:
   - `floyd.h` — defines `Matrix` class and types
   - `random_int.h` — random integer generator
+  - `clock.h` — simple timing utility
 
 > Make sure these headers are in your project directory.
 
@@ -39,27 +41,43 @@ This project implements the **Floyd-Warshall algorithm** for computing the short
 
 ## 🧪 Compilation
 
+To compile the core algorithm:
+
 ```bash
 g++ -std=c++20 -pthread -o ParallelFloydWarshall ParallelFloydWarshall.cpp
 ```
 
+To compile the test runner:
+
+```bash
+g++ -std=c++20 -pthread -o TestFloydWarshall TestFloydWarshall.cpp
+```
+
 ---
 
-## 🚀 Usage
+## 🚀 Running the Test
 
-You can call the `generate_vertices`, `generate_edges`, `minimum_distance`, and `minimum_distance_par` functions from your main function depending on whether you want sequential or parallel execution.
+Use the test runner to generate a random graph and benchmark both versions of the algorithm:
 
-### Example
-
-```cpp
-Vertices points;
-Matrix M;
-
-generate_vertices(100, points, 500);          // 100 vertices within a 500×500 grid
-generate_edges(100.0, points, M);             // Connect vertices within 100 units
-minimum_distance_par(M);                      // Compute all-pairs shortest paths in parallel
-print(std::cout, M);                          // Output the final distance matrix
+```bash
+./TestFloydWarshall [n] [distance] [side]
 ```
+
+- `n`        – Number of cities (vertices) to generate (default: 6)
+- `distance` – Maximum distance to connect cities (default: 40)
+- `side`     – Side length of the square area (default: 100)
+
+### Example:
+
+```bash
+./TestFloydWarshall 100 50 200
+```
+
+This runs both the sequential and parallel versions, and writes matrices to:
+
+- `mat_init.txt` — initial adjacency matrix
+- `mat_seq.txt` — result after sequential Floyd-Warshall
+- `mat_par.txt` — result after parallel Floyd-Warshall
 
 ---
 
@@ -73,7 +91,7 @@ print(std::cout, M);                          // Output the final distance matri
 
 ## ✅ Status
 
-This project is complete and working as intended. All logic has been tested and validated. No runtime validation is necessary unless changes are made.
+This project is complete and working as intended. All logic has been tested and validated.
 
 ---
 
