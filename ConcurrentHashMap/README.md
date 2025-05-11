@@ -9,7 +9,7 @@ This project implements a **thread-safe associative container** (similar to `std
 | File Name              | Description |
 |------------------------|-------------|
 | `ConcurrentMap.h`      | Thread-safe hash map implementation with shared locks per bucket |
-| `test.cpp`| Multithreaded test that exercises all operations and verifies correctness |
+| `TestConcurrentMap.cpp`| Multithreaded test that exercises all operations and verifies correctness |
 
 ---
 
