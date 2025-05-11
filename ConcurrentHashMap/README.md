@@ -35,7 +35,7 @@ This project implements a **thread-safe associative container** (similar to `std
 To compile the test program:
 
 ```bash
-g++ -std=c++17 -pthread -o test test.cpp
+g++ -std=c++17 -pthread -o test TestConcurrentMap.cpp
 ```
 
 > Ensure that `ConcurrentMap.h` is in the same directory.
