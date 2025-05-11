@@ -1,71 +1,63 @@
-# Parallel Floyd-Warshall Algorithm (C++)
+# Parallel Floyd-Warshall Algorithm in C++
 
-This project implements the **Floyd-Warshall algorithm** for computing the shortest paths between all pairs of vertices in a graph. It includes both:
+This project implements the **Floyd-Warshall algorithm** for computing shortest paths between all pairs of nodes in a graph. It includes both:
 
 - A **sequential version**
-- A **parallel version** using multiple threads with `std::jthread`
+- A **parallel version** using C++20 threads (`std::jthread`)
+
+The project also contains a **CLI-based test harness** to benchmark both versions and output the resulting adjacency matrices.
 
 ---
 
-## 📌 Overview
+## 🗂 Files Included
 
-- Vertices are randomly generated in a 2D space.
-- Edges are created between vertices that lie within a given Euclidean distance.
-- The edge weight is the rounded Euclidean distance between vertices.
-- Parallelism is introduced by dividing the matrix row-wise per thread.
-
----
-
-## 🛠 Features
-
-- Custom 2D graph generator
-- Distance-based edge creation
-- All-pairs shortest path (Floyd-Warshall)
-- Parallel matrix computation using threads
-- Matrix pretty-printing with "inf" for unreachable vertices
-- Built-in test runner with CLI support
+| File Name               | Description |
+|------------------------|-------------|
+| `ParallelFloydWarshall.cpp` | Core implementation of graph generation and Floyd-Warshall (sequential + parallel). |
+| `TestFloydWarshall.cpp`     | Main testing script with CLI arguments and output writing. |
+| `floyd.h`                   | Matrix class and declarations for graph utilities and algorithms. |
+| `random_int.h`              | Lightweight random integer generator class. |
+| `clock.h`                   | Simple timing utility used for benchmarking. |
 
 ---
 
 ## 🧱 Dependencies
 
-- C++20 or newer (for `std::jthread`)
-- Custom headers:
-  - `floyd.h` — defines `Matrix` class and types
-  - `random_int.h` — random integer generator
-  - `clock.h` — simple timing utility
-
-> Make sure these headers are in your project directory.
+- C++20 or newer (required for `std::jthread`)
+- A C++ compiler such as `g++`, `clang++`, or MSVC
+- No external libraries required
 
 ---
 
 ## 🧪 Compilation
 
-To compile the core algorithm:
+### Compile the core implementation:
 
 ```bash
 g++ -std=c++20 -pthread -o ParallelFloydWarshall ParallelFloydWarshall.cpp
 ```
 
-To compile the test runner:
+### Compile the test runner:
 
 ```bash
 g++ -std=c++20 -pthread -o TestFloydWarshall TestFloydWarshall.cpp
 ```
 
+Make sure all `.h` files (`floyd.h`, `random_int.h`, `clock.h`) are in the same directory.
+
 ---
 
 ## 🚀 Running the Test
 
-Use the test runner to generate a random graph and benchmark both versions of the algorithm:
+Run the test executable to generate a random graph, run both versions of the algorithm, and compare performance:
 
 ```bash
 ./TestFloydWarshall [n] [distance] [side]
 ```
 
-- `n`        – Number of cities (vertices) to generate (default: 6)
-- `distance` – Maximum distance to connect cities (default: 40)
-- `side`     – Side length of the square area (default: 100)
+- `n`        – Number of vertices (default: 6)
+- `distance` – Max edge connection distance (default: 40)
+- `side`     – Side length of square area (default: 100)
 
 ### Example:
 
@@ -73,29 +65,33 @@ Use the test runner to generate a random graph and benchmark both versions of th
 ./TestFloydWarshall 100 50 200
 ```
 
-This runs both the sequential and parallel versions, and writes matrices to:
+This will:
 
-- `mat_init.txt` — initial adjacency matrix
-- `mat_seq.txt` — result after sequential Floyd-Warshall
-- `mat_par.txt` — result after parallel Floyd-Warshall
+1. Generate 100 random 2D points in a 200×200 square
+2. Connect points within 50 units of distance
+3. Run both Floyd-Warshall versions
+4. Output the results to:
+   - `mat_init.txt` — initial adjacency matrix
+   - `mat_seq.txt` — after sequential algorithm
+   - `mat_par.txt` — after parallel algorithm
 
 ---
 
 ## 📈 Performance Notes
 
-- The parallel version runs `n` iterations (for each `k`) and divides the matrix rows among hardware threads.
-- The benefit is noticeable for larger graphs (e.g., >500 nodes).
-- Threads are safely joined on each outer iteration to synchronize row updates.
+- The parallel version assigns chunks of rows to available hardware threads.
+- Threads synchronize at each iteration `k` of the Floyd-Warshall algorithm.
+- The performance benefit becomes noticeable for graphs with 500+ vertices.
 
 ---
 
 ## ✅ Status
 
-This project is complete and working as intended. All logic has been tested and validated.
+This project is complete and functions as expected. All results match between sequential and parallel versions.
 
 ---
 
 ## 🤝 Acknowledgments
 
-- Based on the classical Floyd-Warshall algorithm
-- Parallel logic adapted for row-wise matrix processing with C++20 threads
+- Uses standard Floyd-Warshall algorithm with row-wise parallelization.
+- Built using modern C++20 features (`std::jthread`, `<chrono>`, `<random>`).
