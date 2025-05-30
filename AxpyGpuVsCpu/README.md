@@ -1,9 +1,7 @@
 # AXPY Benchmark (CUDA & C++ Threads)
 
 This project implements the classic **AXPY** operation  
-$
-  \mathbf{c} = \alpha\,\mathbf{a} + \mathbf{b}
-$
+  **c = α·a + b**  
 on large vectors, and compares:
 
 - A **GPU version** written in CUDA  
