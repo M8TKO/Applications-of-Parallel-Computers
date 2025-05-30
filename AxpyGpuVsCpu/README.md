@@ -1,7 +1,8 @@
+````markdown
 # AXPY Benchmark (CUDA & C++ Threads)
 
-This project implements the classic **AXPY** operation  
-  **c = α·a + b**  
+This project implements the classic AXPY operation  
+**c = α·a + b**  
 on large vectors, and compares:
 
 - A **GPU version** written in CUDA  
@@ -13,11 +14,11 @@ on large vectors, and compares:
 
 | File                   | Description                                                             |
 |------------------------|-------------------------------------------------------------------------|
-| `AxpyBenchmark.cu`     | Single‐source CUDA + host C++ program. Contains:                        |
-|                        | • `axpyKernel` CUDA kernel (stride‐based loop)                         |
+| `AxpyBenchmark.cu`     | Single‐file CUDA + host C++ program. Contains:                          |
+|                        | • `axpyKernel` CUDA kernel (stride‐based loop)                          |
 |                        | • `axpy_cpu()` multi‐threaded CPU implementation                        |
-|                        | • setup, timing, correctness check, and file logging.                  |
-| `REZULTS.txt`          | Append‐only log of each run’s parameters and timings.                   |
+|                        | • setup, timing, correctness check, and file logging.                   |
+| `REZULTS.txt`          | Append‐only log of each run’s configuration and timings.                |
 
 ---
 
@@ -43,3 +44,36 @@ on large vectors, and compares:
 
 ```bash
 nvcc -std=c++20 -o AxpyBenchmark AxpyBenchmark.cu
+````
+
+---
+
+## 🚀 Running the Benchmark
+
+```bash
+./AxpyBenchmark
+```
+
+* Appends a new entry to `REZULTS.txt` with:
+
+  * Grid size (# of blocks)
+  * Block size (# of threads)
+  * GPU execution time (µs)
+  * CPU execution time (µs)
+  * Maximum absolute error
+
+---
+
+## ✅ Status
+
+✅ Complete and verified: GPU and CPU results match (max error ≈ 0).
+
+---
+
+## 🤝 Acknowledgments
+
+* Demonstrates core parallel programming models: CUDA and C++ threading
+* Uses modern C++ features for safety and simplicity (`std::vector`, RAII, `<chrono>`)
+
+```
+```
